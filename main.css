@@ -1,0 +1,15 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#game {
+    min-width: 600px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 5px 0px;
+}
+
+.colorblock {
+    
+}
