@@ -1,15 +1,20 @@
 // TODO: HandleClick method
-// TODO: Make slightly variant color
 // TODO: Create grid with blocks as seperate div
 
 const game = {
     // INTIALIZE GAME
     init: function() {
-        let num = Math.floor(Math.random() * 12 + 6);
+        let num = Math.floor(Math.random() * 7) + 4;
+        if (num % 2 != 0) {num -= 1};
         this.generateColor();
         for (let i = 0; i < num; i++) {
-            document.getElementById('game').appendChild(this.generateBlock());
-        }
+            var div = document.createElement('div');
+                for (let j = 0; j < 4; j++) {
+                    div.appendChild(this.generateBlock());
+                }
+            document.getElementById('game').appendChild(div);
+            }
+        this.setAlternateColor();
         this.setListeners();
     },
 
@@ -39,7 +44,7 @@ const game = {
             varColors[num] -= 100;
         }
 
-        game.altColor = `rba(${varColors[0]}, ${varColors[1]}, ${varColors[2]})`;
+        game.altColor = `rgb(${varColors[0]}, ${varColors[1]}, ${varColors[2]})`;
 
     },
 
@@ -64,9 +69,18 @@ const game = {
         blocks.forEach(function(e) {e.addEventListener('click', game.handleBlockClick)})
     },
 
+    // SET ALTERNATE COLOR
+    setAlternateColor: function() {
+        var altBlock = document.querySelectorAll('.colorblock');
+        var randNum = Math.floor(Math.random() * altBlock.length + 1);
+        altBlock[randNum].style.backgroundColor  = this.altColor;
+    },
+
     // HANDLE BLOCK CLICKS
     handleBlockClick: function() {
-        
+        if (this.style.backgroundColor === game.altColor) {
+            
+        }
     },
 }
 
