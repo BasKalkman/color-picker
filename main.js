@@ -20,6 +20,7 @@ const game = {
     // RESET GAME
     reset: function() {
         document.getElementById('game').innerHTML = "";
+        document.getElementById('restart').textContent = "Restart";
         game.color = "";
         game.altColor = "";
         game.counter = 0;
@@ -30,6 +31,7 @@ const game = {
     color: "",
     altColor: "",
     counter: 0,
+    difficulty: 120,
 
     // GENERATE COLORS
     generateColor: function() {
@@ -46,10 +48,10 @@ const game = {
     generateVariantColor: function(r, g, b) {
         let varColors = [r, g, b];
         let num = Math.floor(Math.random() * 3);
-        if (varColors[num] < 100) {
-            varColors[num] += 100;
+        if (varColors[num] < 120) {
+            varColors[num] += game.difficulty;
         } else {
-            varColors[num] -= 100;
+            varColors[num] -= game.difficulty;
         }
 
         game.altColor = `rgb(${varColors[0]}, ${varColors[1]}, ${varColors[2]})`;
@@ -91,12 +93,21 @@ const game = {
     // HANDLE SUCCESS
     success: function() {
         game.counter += 1;
+        game.checkDifficulty();
         document.getElementById('game').innerHTML = "";
         game.init();
     },
 
+    // CHECK AND CHANGE DIFFICULTY
+    checkDifficulty: function() {
+        if (game.counter % 5 === 0) {
+            if (game.difficulty > 20) {game.difficulty -= 20}
+        }
+    },
+
     // HANDLE FAIL
     failure: function() {
+        document.getElementById('restart').textContent = "Play again";
         if (confirm(`Wrong choice!\nYou got ${game.counter} correct!\nPlay again?`)) {
             game.reset();
         } else {
