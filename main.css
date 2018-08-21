@@ -11,7 +11,6 @@ html, body {
     margin: 0 auto;
     text-align: center;
     background: linear-gradient(to bottom right, darkblue, blue, steelblue, lightblue);
-    
 }
 
 #controller {
@@ -39,4 +38,5 @@ html, body {
     border: 3px transparent;
     margin: 2px;
     display: inline-block;
+    cursor: pointer;
 }

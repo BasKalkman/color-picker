@@ -1,9 +1,8 @@
-// TODO: HandleClick method
-// TODO: Create grid with blocks as seperate div
 
 const game = {
     // INTIALIZE GAME
     init: function() {
+        document.getElementById('counter').textContent = game.counter;
         let num = Math.floor(Math.random() * 7) + 4;
         if (num % 2 != 0) {num -= 1};
         this.generateColor();
@@ -16,6 +15,15 @@ const game = {
             }
         this.setAlternateColor();
         this.setListeners();
+    },
+
+    // RESET GAME
+    reset: function() {
+        document.getElementById('game').innerHTML = "";
+        game.color = "";
+        game.altColor = "";
+        game.counter = 0;
+        game.init();
     },
 
     // VARIABLES
@@ -63,24 +71,46 @@ const game = {
         return block;
     },
 
-    // SET BLOCK LISTENERS
-    setListeners: function() {
-        var blocks = document.querySelectorAll('.colorblock');
-        blocks.forEach(function(e) {e.addEventListener('click', game.handleBlockClick)})
-    },
-
-    // SET ALTERNATE COLOR
+    
+    // SET ALTERNATE COLOR ON BLOCK
     setAlternateColor: function() {
         var altBlock = document.querySelectorAll('.colorblock');
-        var randNum = Math.floor(Math.random() * altBlock.length + 1);
-        altBlock[randNum].style.backgroundColor  = this.altColor;
+        var randNum = Math.floor(Math.random() * altBlock.length);
+        altBlock[randNum].style.backgroundColor  = game.altColor;
     },
-
+    
     // HANDLE BLOCK CLICKS
     handleBlockClick: function() {
         if (this.style.backgroundColor === game.altColor) {
-            
+            game.success();
+        } else {
+            game.failure();
         }
+    },
+
+    // HANDLE SUCCESS
+    success: function() {
+        game.counter += 1;
+        document.getElementById('game').innerHTML = "";
+        game.init();
+    },
+
+    // HANDLE FAIL
+    failure: function() {
+        if (confirm(`Wrong choice!\nYou got ${game.counter} correct!\nPlay again?`)) {
+            game.reset();
+        } else {
+            var blocks = document.querySelectorAll('.colorblock')
+            blocks.forEach((e) => {e.removeEventListener('click', this.handleBlockClick)})
+        }
+    },
+
+    // SET  LISTENERS
+    setListeners: function() {
+        var blocks = document.querySelectorAll('.colorblock');
+        blocks.forEach(function(e) {e.addEventListener('click', game.handleBlockClick)});
+        var resetButton = document.querySelector('#restart');
+        resetButton.addEventListener('click', game.reset);
     },
 }
 
