@@ -24,6 +24,7 @@ const game = {
         game.color = "";
         game.altColor = "";
         game.counter = 0;
+        game.difficulty = 120;
         game.init();
     },
 
@@ -101,7 +102,7 @@ const game = {
     // CHECK AND CHANGE DIFFICULTY
     checkDifficulty: function() {
         if (game.counter % 5 === 0) {
-            if (game.difficulty > 20) {game.difficulty -= 20}
+            if (game.difficulty > 20) {game.difficulty -= 10}
         }
     },
 
