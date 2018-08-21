@@ -6,27 +6,40 @@ const game = {
     // INTIALIZE GAME
     init: function() {
         let num = Math.floor(Math.random() * 12 + 6);
-        let color = this.generateColor();
+        this.generateColor();
         for (let i = 0; i < num; i++) {
-            document.getElementById('game').appendChild(this.generateBlock(color[0], color[1], color[2]));
+            document.getElementById('game').appendChild(this.generateBlock());
         }
         this.setListeners();
     },
 
+    // VARIABLES
+    color: "",
+    altColor: "",
+    counter: 0,
+
     // GENERATE COLORS
     generateColor: function() {
-        let color = [];
-        
-        for (let i = 0; i < 3; i++) {
-            color.push(this.generateNumber());
-        }
+        let r = this.generateNumber();
+        let g = this.generateNumber();
+        let b = this.generateNumber();
 
-        return color;
+        game.color = `rgb(${r}, ${g}, ${b})`;
+
+        this.generateVariantColor(r, g, b);
     },
 
     // GENERATE COLOR VARIANT
-    generateVariantColor: function(colorArray) {
-        let varColor = [];
+    generateVariantColor: function(r, g, b) {
+        let varColors = [r, g, b];
+        let num = Math.floor(Math.random() * 3);
+        if (varColors[num] < 100) {
+            varColors[num] += 100;
+        } else {
+            varColors[num] -= 100;
+        }
+
+        game.altColor = `rba(${varColors[0]}, ${varColors[1]}, ${varColors[2]})`;
 
     },
 
@@ -37,9 +50,9 @@ const game = {
     },
 
     // GENERATE BLOCK
-    generateBlock: function(r, g, b) {
+    generateBlock: function() {
         let block = document.createElement("div");
-        block.style.backgroundColor = `rgb(${r}, ${g}, ${b}`;
+        block.style.backgroundColor = this.color;
         block.classList.add('colorblock');
 
         return block;
