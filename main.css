@@ -14,11 +14,40 @@ html, body {
 }
 
 #controller {
-    background-color: white;
+    background-color: darkslategray;
     line-height: 1.5rem;
-    max-width: 600px;
+    /* max-width: 600px; */
     margin: 0 auto;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+#controllerContainer {
+    min-width: 300px;
+}
+
+#restart {
+    float: left;
+    border: none;
+    background-color: darkslategray;
+    color: white;
+    font-weight: bold;
+    height: 100%;
+    transition: all 0.4s;
+    outline: none;
+}
+
+#restart:hover {
+    background-color: lightgrey;
+    color: black;
+}
+
+#counterDiv {
+    float: right;
+    color: white;
+    font-weight: bold;
+    height: 100%;
+    padding: auto 0;
 }
 
 #game {
