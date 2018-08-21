@@ -25,6 +25,7 @@ const game = {
         game.altColor = "";
         game.counter = 0;
         game.difficulty = 120;
+        game.solution = 0;
         game.init();
     },
 
@@ -33,6 +34,7 @@ const game = {
     altColor: "",
     counter: 0,
     difficulty: 120,
+    solution: 0,
 
     // GENERATE COLORS
     generateColor: function() {
@@ -79,6 +81,7 @@ const game = {
     setAlternateColor: function() {
         var altBlock = document.querySelectorAll('.colorblock');
         var randNum = Math.floor(Math.random() * altBlock.length);
+        game.solution = randNum;
         altBlock[randNum].style.backgroundColor  = game.altColor;
     },
     
@@ -109,12 +112,16 @@ const game = {
     // HANDLE FAIL
     failure: function() {
         document.getElementById('restart').textContent = "Play again";
-        if (confirm(`Wrong choice!\nYou got ${game.counter} correct!\nPlay again?`)) {
-            game.reset();
-        } else {
-            var blocks = document.querySelectorAll('.colorblock')
-            blocks.forEach((e) => {e.removeEventListener('click', this.handleBlockClick)})
-        }
+        var blocks = document.querySelectorAll('.colorblock');
+        blocks[game.solution].style.border = "3px solid black";
+        
+        setTimeout(function() {
+            if (confirm(`Wrong choice!\nYou got ${game.counter} correct!\nPlay again?`)) {
+                game.reset();
+            } else {
+                blocks.forEach((e) => {e.removeEventListener('click', this.handleBlockClick)})
+            }
+        }, 300)
     },
 
     // SET  LISTENERS
