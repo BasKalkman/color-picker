@@ -33,8 +33,24 @@ const game = {
     color: "",
     altColor: "",
     counter: 0,
-    difficulty: 120,
+    difficulty: 120, // Lower means harder, smaller difference from rest of color values
     solution: 0,
+    currentTheme: "light",
+
+    // CHANGE LIGHT OR DARK THEME
+    changeTheme: function() {
+        if (game.currentTheme === "light") {
+            document.querySelector('body').style.backgroundColor = "#232323";
+            var blocks = document.querySelectorAll('.colorblock');
+            blocks.forEach((e) => {e.style.border = "2px solid #232323"})
+            game.currentTheme = "dark";
+        } else {
+            document.querySelector('body').style.backgroundColor = "white";
+            var blocks = document.querySelectorAll('.colorblock');
+            blocks.forEach((e) => { e.style.border = "2px solid white" })
+            game.currentTheme = "light";
+        }
+    },
 
     // GENERATE COLORS
     generateColor: function() {
@@ -72,6 +88,7 @@ const game = {
         let block = document.createElement("div");
         block.style.backgroundColor = this.color;
         block.classList.add('colorblock');
+        game.currentTheme === "light" ? block.style.border = "2px solid white" : block.style.border = "2px solid #232323"
 
         return block;
     },
@@ -104,16 +121,15 @@ const game = {
 
     // CHECK AND CHANGE DIFFICULTY
     checkDifficulty: function() {
-        if (game.counter % 5 === 0) {
-            if (game.difficulty > 20) {game.difficulty -= 10}
-        }
+        if (game.counter % 5 === 0 && game.difficulty > 20) {game.difficulty -= 10}
     },
 
     // HANDLE FAIL
     failure: function() {
         document.getElementById('restart').textContent = "Play again";
         var blocks = document.querySelectorAll('.colorblock');
-        blocks[game.solution].style.border = "3px solid black";
+        var borderColor = game.currentTheme === "light" ? "2px solid black" : "2px solid white";
+        blocks[game.solution].style.border = borderColor;
         
         setTimeout(function() {
             if (confirm(`Wrong choice!\nYou got ${game.counter} correct!\nPlay again?`)) {
@@ -130,6 +146,8 @@ const game = {
         blocks.forEach(function(e) {e.addEventListener('click', game.handleBlockClick)});
         var resetButton = document.querySelector('#restart');
         resetButton.addEventListener('click', game.reset);
+        var themeButton = document.querySelector('#changeTheme');
+        themeButton.addEventListener('click', game.changeTheme);
     },
 }
 

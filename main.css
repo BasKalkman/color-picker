@@ -16,7 +16,6 @@ html, body {
 #controller {
     background-color: darkslategray;
     line-height: 1.5rem;
-    /* max-width: 600px; */
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -24,9 +23,11 @@ html, body {
 
 #controllerContainer {
     min-width: 300px;
+    display: flex;
+    justify-content: space-between;
 }
 
-#restart {
+button {
     float: left;
     border: none;
     background-color: darkslategray;
@@ -37,9 +38,19 @@ html, body {
     outline: none;
 }
 
-#restart:hover {
+button:hover {
     background-color: lightgrey;
     color: black;
+}
+
+button .darktheme {
+    background-color: lightgrey;
+    color: black;
+}
+
+button .darktheme:hover {
+    background-color: darkslategray;
+    color: white;
 }
 
 #counterDiv {
@@ -55,17 +66,17 @@ html, body {
     max-width: 600px;
     margin: 0 auto;
     padding: 5px 0px;
+    display: flex;
     justify-content: center;
     flex-flow: wrap;
-    display: flex;
 }
 
 .colorblock {
     min-width: 50px;
     height: 50px;
-    padding-bottom: 5px;
-    border: 3px solid white;
-    /* margin: 2px; */
+    margin: 0;
+    /* padding-bottom: 5px; */
+    border: 2px solid white;
     display: inline-block;
     cursor: pointer;
 }
