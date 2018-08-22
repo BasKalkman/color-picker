@@ -21,6 +21,7 @@ const game = {
     reset: function() {
         document.getElementById('game').innerHTML = "";
         document.getElementById('restart').textContent = "Restart";
+        game.closeModal();
         game.color = "";
         game.altColor = "";
         game.counter = 0;
@@ -130,14 +131,8 @@ const game = {
         var blocks = document.querySelectorAll('.colorblock');
         var borderColor = game.currentTheme === "light" ? "2px solid black" : "2px solid white";
         blocks[game.solution].style.border = borderColor;
-        
-        setTimeout(function() {
-            if (confirm(`Wrong choice!\nYou got ${game.counter} correct!\nPlay again?`)) {
-                game.reset();
-            } else {
-                blocks.forEach((e) => {e.removeEventListener('click', this.handleBlockClick)})
-            }
-        }, 300)
+        blocks.forEach((e) => {e.removeEventListener('click', this.handleBlockClick)})
+        game.createModal();
     },
 
     // SET  LISTENERS
@@ -148,6 +143,32 @@ const game = {
         resetButton.addEventListener('click', game.reset);
         var themeButton = document.querySelector('#changeTheme');
         themeButton.addEventListener('click', game.changeTheme);
+    },
+
+    // MODAL FUNCTION
+    createModal: function() {
+        var modal = document.getElementById('failModal');
+        var modalText = document.getElementById('modalMsg');
+        var modalRestart = document.getElementById('modalRestart');
+        var modalClose = document.getElementById('modalClose');
+
+        modalText.innerHTML = `Wrong choice!<br>You got ${game.counter} right<br>Play again?`;
+        modalRestart.addEventListener('click', game.reset);
+        modalClose.addEventListener('click', game.closeModal);
+
+        modal.style.display = "block";
+    },
+
+    closeModal: function() {
+        var modal = document.getElementById('failModal');
+        var modalText = document.getElementById('modalMsg');
+        var modalRestart = document.getElementById('modalRestart');
+        var modalClose = document.getElementById('modalClose');
+
+        modal.style.display = "none";
+        modalText.innerHTML = "";
+        modalRestart.removeEventListener("click", game.reset);
+        modalClose.removeEventListener("click", game.closeModal);
     },
 }
 
